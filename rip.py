@@ -1,9 +1,8 @@
 import os
 import urllib.parse
-import json
 from io import BytesIO
 
-from flask import Flask, request, send_file
+from flask import Flask, request, send_file, jsonify
 from PIL import Image, ImageDraw, ImageFont
 
 app = Flask(__name__)
@@ -13,7 +12,7 @@ font = ImageFont.truetype("Slackey/Slackey-Regular.ttf", 15)
 @app.route('/rip', methods=['POST'])
 def rip_cmd():
 	img_query = urllib.parse.urlencode({'text': request.form['text']})
-	return json.dumps({
+	return jsonify({
 		'response_type': 'in_channel',
 		'text': 'rip...',
 		'attachments': [
