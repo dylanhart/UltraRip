@@ -1,13 +1,14 @@
 import os
 import urllib.parse
 from io import BytesIO
+import textwrap
 
 from flask import Flask, request, send_file, jsonify
 from PIL import Image, ImageDraw, ImageFont
 
 app = Flask(__name__)
 base_url = 'https://ultra-rip.herokuapp.com/'
-font = ImageFont.truetype("Slackey/Slackey-Regular.ttf", 15)
+font = ImageFont.truetype("Slackey/Slackey-Regular.ttf", 25)
 
 @app.route('/rip', methods=['POST'])
 def rip_cmd():
@@ -24,10 +25,11 @@ def rip_cmd():
 
 @app.route('/gen_img', methods=['GET'])
 def gen_img():
+	msg = '\n'.join(textwrap.wrap(request.args.get('text', 'dead...'), 20))
 	rip_img = Image.open('rip.png')
 
 	canvas = ImageDraw.Draw(rip_img)
-	canvas.text((150, 350), request.args.get('text', 'they died...'), 'black')
+	canvas.multiline_text((150, 350), msg, 'black', font)
 	del canvas
 
 	img_io = BytesIO()
