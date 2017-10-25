@@ -33,7 +33,7 @@ def gen_img():
 	del canvas
 
 	img_io = BytesIO()
-	rip_img.save(img_io, 'PNG', quality=70)
+	rip_img.save(img_io, 'PNG')
 	img_io.seek(0)
 	return send_file(img_io, mimetype='image/png')
 
