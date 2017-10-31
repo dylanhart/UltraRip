@@ -29,7 +29,11 @@ def gen_img():
 	rip_img = Image.open('rip.png')
 
 	canvas = ImageDraw.Draw(rip_img)
-	canvas.multiline_text((150, 350), msg, 'black', font)
+
+	center = rip_img.width//2 - 20
+	text_width, _ = canvas.multiline_textsize(msg, font)
+
+	canvas.multiline_text((center - text_width//2, 350), msg, 'black', font, align='center', )
 	del canvas
 
 	img_io = BytesIO()
